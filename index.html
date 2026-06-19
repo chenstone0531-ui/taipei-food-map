@@ -110,7 +110,7 @@ function gen(n){const out=[];let seed=20260619;
 const data=[...curated,...gen(300-curated.length)].map((a,i)=>({i,n:a[0],e:a[1],c:a[2],tag:a[3],d:a[4],addr:a[5],star:a[6],price:a[7]}));
 
 const cats=["全部","麵食","小吃","火鍋","日式","韓式","甜點","咖啡","熱炒","燒烤","早餐","港點","素食","夜市","牛排"];
-let activeCat="全部",activeItem=null,shown=20;
+let activeCat="全部",activeItem=null,shown=300;
 const mapSrc=q=>"https://www.google.com/maps?q="+encodeURIComponent(q)+"&z=16&output=embed";
 const navUrl=q=>"https://www.google.com/maps/dir/?api=1&destination="+encodeURIComponent(q);
 const photo=(c,i)=>"https://loremflickr.com/160/160/food,"+encodeURIComponent({麵食:"noodle",小吃:"streetfood",火鍋:"hotpot",日式:"sushi",韓式:"korean",甜點:"dessert",咖啡:"coffee",熱炒:"chinesefood",燒烤:"bbq",早餐:"breakfast",港點:"dimsum",素食:"vegetable",夜市:"nightmarket",牛排:"steak"}[c]||"food")+"?lock="+i;
@@ -118,8 +118,8 @@ const photo=(c,i)=>"https://loremflickr.com/160/160/food,"+encodeURIComponent({�
 function filtered(){const q=document.getElementById('q').value.trim();
  return data.filter(d=>(activeCat==='全部'||d.c===activeCat)&&(!q||d.n.includes(q)||d.c.includes(q)||d.d.includes(q)));}
 function renderCats(){document.getElementById('cats').innerHTML=cats.map(c=>`<div class="cat${c===activeCat?' on':''}" onclick="setCat('${c}')">${c}</div>`).join('');}
-function setCat(c){activeCat=c;shown=20;render();}
-function render(keep){if(!keep)shown=20;const items=filtered();
+function setCat(c){activeCat=c;shown=300;render();}
+function render(keep){const items=filtered();
  document.getElementById('count').textContent="共 "+items.length+" 間";
  document.getElementById('list').innerHTML=items.slice(0,shown).map(d=>`
   <div class="item${activeItem===d.i?' on':''}" onclick="show(${d.i})">
